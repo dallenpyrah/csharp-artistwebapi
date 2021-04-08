@@ -14,7 +14,7 @@ namespace artists.Services
             _repo = repo;
         }
 
-        internal object CreateArtist(Artist newArtist)
+        internal Artist CreateArtist(Artist newArtist)
         {
             return _repo.CreateArtist(newArtist);
         }

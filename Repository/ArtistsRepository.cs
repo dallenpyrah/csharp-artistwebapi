@@ -15,7 +15,7 @@ namespace artists.Repository
             _db = db;
         }
 
-        internal object CreateArtist(Artist newArtist)
+        internal Artist CreateArtist(Artist newArtist)
         {
             string sql = @"
             INSERT INTO artists
@@ -24,6 +24,7 @@ namespace artists.Repository
             (@Name, @Age, @Instrument, @Location);
             SELECT LAST_INSERT_ID();";
             int id = _db.ExecuteScalar<int>(sql, newArtist);
+            newArtist.Id = id;
             return newArtist;
         }
 
@@ -56,7 +57,7 @@ namespace artists.Repository
 
         internal void DeleteArtist(int id)
         {
-            string sql = "DELETE FROM artists WHERE id = @id;";
+            string sql = "DELETE FROM artists WHERE id = @id LIMIT 1;";
             _db.ExecuteScalar<Artist>(sql, new { id });
             return;
         }
